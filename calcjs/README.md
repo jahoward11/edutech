@@ -1,6 +1,6 @@
 # edutech/calcjs
 
-__Project purpose:__ Learn math and javascript code together.
+__Project purpose:__ Learn math and JavaScript code together.
 
 - [Core js math functions](https://jahoward11.github.com/edutech/calcjs/ref-mathjs.html)
 
