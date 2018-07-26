@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>HTML ebook: Heading Numbering Strategy</title>
+<meta charset='utf-8' />
+<meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes" />
+<style type='text/css'>
+a { color: rgb(65, 131, 196); text-decoration: none; }
+a:visited { color: rgb(65, 131, 196); }
+a:hover { color: rgb(65, 131, 196); text-decoration: underline; }
+a:active { color: rgb(65, 131, 196); text-decoration: underline; }
+a:focus { outline: rgb(51, 51, 51) dotted thin; }
+p { margin: 1em 0px; line-height: 1.4em; }
+img { max-width: 100%; }
+h1, h2, h3, h4, h5, h6 { font-weight: bold; line-height: 1em; margin-top: 1.4em; margin-bottom: 0.5em; }
+h4, h5, h6 { font-weight: bold; }
+h1 { font-size: 32px; }
+h2 { font-size: 26px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+blockquote { color: rgb(153, 153, 153); margin: 0px; padding-left: 20px; border-left-width: 5px; border-left-style: solid; border-left-color: rgb(238, 238, 238); }
+hr { display: block; height: 1px; border-width: 0px 0px 1px; border-top-style: solid; border-top-color: rgb(170, 170, 170); border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); margin: 1em 0px; padding: 0px; }
+pre, code, kbd, samp { color: rgb(102, 102, 102); font-family: Menlo, Consolas, "Courier New", courier, monospace; font-size: 12px; }
+pre { background-color: rgb(250, 250, 250); border: 1px solid rgb(221, 221, 221); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; padding: 10px 15px; }
+pre code { border: 0px; }
+code { background-color: rgb(250, 250, 250); padding: 2px 4px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(221, 17, 68); }
+b, strong { font-weight: bold; }
+dfn { font-style: italic; }
+ins { background-color: rgb(255, 255, 153); color: rgb(0, 0, 0); text-decoration: none; background-position: initial initial; background-repeat: initial initial; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); font-style: italic; font-weight: bold; background-position: initial initial; background-repeat: initial initial; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+ul, ol { margin: 1em 0px; padding: 0px 0px 0px 2em; }
+li p:last-child { margin: 0px; }
+dd { margin: 0px 0px 0px 2em; }
+img { border: 0px; vertical-align: middle; }
+table { border-collapse: collapse; color: rgb(0, 0, 0); vertical-align: middle; margin-bottom: 1em; }
+table th { padding: 5px 10px; border: 1px solid rgb(238, 238, 238); background-color: rgb(221, 221, 221); }
+table td { padding: 5px 10px; border: 1px solid rgb(238, 238, 238); }
+.toc ul { padding: 0px; }
+.toc ul li { list-style-type: none; }
+#content { margin: 40px 0px; }
+.footer { margin-top: 30px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); text-align: center; padding: 10px; font-size: 13px; color: rgb(170, 170, 170); }
+html { text-size-adjust: none; }
+body { max-width: 648px; min-width: 560px; margin: 56px auto; padding: 8px; word-wrap: break-word; }
+pre, xmp { white-space: pre-wrap; }
+img { max-width: 616px; max-height: 432px; }
+figure, .figure { margin: 16px 0px; padding: 0px 16px; }
+@media print {
+  body { max-width: 648px; width: 648px; margin: 0 auto; padding: 0; transform: scale(0.868); transform-origin: top; }
+  p { margin: 0.9rem 0; line-height: 1.15; }
+  h1, h2, h3, h4, h5, h6 { page-break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<h3>HTML ebook: Heading Numbering Strategy</h3>
+<p><em>Auto-generating standardized, multi-level heading numbers (hdgnbr) that indicate volume (vol), part (pt), and/or chapter (ch) plus sub-chapter sections (sect)&thinsp;&mdash;&thinsp;both in an HTML document table of contents (toc) and in paragraph counters</em></p>
+<h4 id="analyzing-typical-heading-number-hdgnbr-formats-against-html-heading-tag-levels-h1-h6">Analyzing typical heading-number (hdgnbr) formats against HTML heading-tag levels (h1-h6)</h4>
+<p><em>Preferred heading-tag (h-tag) level assignments are indicated in the table below with an asterisk (*).</em></p>
+<table>
+<thead>
+<tr>
+<th>If vol is</th>
+<th>&amp; pt is</th>
+<th>Then ch/sect may be designated by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>none</td>
+<td>h1(.h2.h3.h4), h2(.h3.h4.h5), h3(.h4.h5.h6) or h4(.h5.h6)</td>
+</tr>
+<tr>
+<td>none</td>
+<td>h1</td>
+<td>h2(.h3.h4.h5)</td>
+</tr>
+<tr>
+<td>h1 *</td>
+<td>h2 *</td>
+<td>h3(.h4.h5.h6) *</td>
+</tr>
+<tr>
+<td>h2</td>
+<td>h3</td>
+<td>h4(.h5.h6)</td>
+</tr>
+</tbody>
+</table>
+<p>Example hdgnbr: <code>2.5.3</code> (one meaning: vol 2, pt 5, ch 3)</p>
+<h5 id="a-modern-html-context-for-hdgnbr">A modern, HTML context for hdgnbr</h5>
+<p>For centuries&thinsp;&mdash;&thinsp;long before books were made electronic and could exist without the need for bound, printed leaves of parchment&thinsp;&mdash;&thinsp;heading numbers were used extensively. In this discussion, heading numbers are the numbers that help refer to (as in a citation) or pinpoint, look up and locate again when needed, a specific passage of text within a published work, manual, article, etc.</p>
+<p>A standard heading number (hdgnbr) represents one or more levels of any of the vol, pt and ch/sect division types that are commonly found within books and documents of all kinds. Two or more levels in a hdgnbr are delineated by a dot (.) or other sequence of non-alphanumeric characters. This can, and does, get confusing when one is unaware of any precedent.</p>
+<p>But now there is an extra complication. A standard HTML document cannot technically distinguish a volume heading from a part heading&thinsp;&mdash;&thinsp;or from a chapter heading, and so on. Instead, in a standard HTML document, the various division heading types can be differentiated only by inserting each into one of six heading-tag levels (h1-h6). So, the author of an HTML document is left alone to determine which HTML heading-tag level is intended to correspond to vol, which to pt, which to ch, etc.</p>
+<p>And, given this technicality, there is widespread variation and a general lack of uniformity of practice among HTML authors&thinsp;&mdash;&thinsp;which complicates efforts at making the heading numbering of an HTML document conform to any sort of standard.</p>
+<h5 id="why-assign-h3-to-ch">Why assign h3 to ch?</h5>
+<p>As demonstrated in the table above, volumes and parts may be accommodated (as when a co-author or project manager makes a future update or addendum to an HTML document) only if chapters are initially designated with the h3 or lower level (higher number) HTML heading tag (h-tag).</p>
+<p>But consider also a modern composition method that uses Markdown. Markdown is an increasingly adopted markup format for composing a plain-text document and, simultaneously, assigning one or more of the six levels of h-tags to the desired, corresponding division types.</p>
+<p>Maintaining a standard designation of h3 for the formal chapters of one&rsquo;s document allows for the simplest Markdown notation (an h3 heading in a Markdown document is indicated with three leading hashes, <code>###</code>) while still accommodating the possibility of creating both vol &amp; pt divisions (indicated with one <code>#</code> leading hash for h1 and two <code>##</code> leading hashes for h2) in that document. Furthermore, when accommodating vol &amp; pt with h1 &amp; h2, if the chapter heading level is designated with h3 out of all remaining h-tag levels (h3-h6), then the highest number of potential section (sub-chapter) levels (h4-h6) remain available for use.</p>
+<p>For these reasons, following are preferred h-assignments:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>vol</td>
+<td>h1</td>
+</tr>
+<tr>
+<td>pt</td>
+<td>h2</td>
+</tr>
+<tr>
+<td>ch/sect</td>
+<td>h3(.h4.h5.h6)</td>
+</tr>
+</tbody>
+</table>
+<p>Nevertheless, in case sub-standard document markup is provided, any of h1 to h6 chapter designations should be accommodated.</p>
+<h5 id="vol-pt-ch-distinctions">vol, pt, ch distinctions</h5>
+<p>The automatic process of generating heading numbers has no reason to distinguish whether a hdgnbr begins with vol, pt, or ch. Other, human provided indicators outside of the generated hdgnbr data must assume the function of making such distinctions plain to the reader.</p>
+<p>Thus, for the hdgnbr example provided above, the same heading number (<code>2.5.3</code>) could represent to a reader any one of the following three variations:</p>
+<ul>
+<li>vol 2, pt 5, ch 3</li>
+<li>pt 2, ch 5, sect 3</li>
+<li>ch 2, sect 5, subsect 3</li>
+</ul>
+<h5 id="role-of-ch-in-hdgnbr">Role of ch in hdgnbr</h5>
+<p>A hdgnbr does not inherently indicate the chapter h-tag level that is established by the author. However, when determining the hdgnbr format, the chapter h-tag level must be taken into consideration for many reasons.</p>
+<p>One significance of the establishment of formal chapters in a document is that readers may be provided with additional navigation features that permit jumping through a series of chapters sequentially, bypassing other division levels&thinsp;&mdash;&thinsp;useful, for example, when reviewing the chapter summaries of every chapter of a book.</p>
+<p>Also, formal chapters establish those places throughout a document where auto-generated paragraph numbering is restarted. Thus, a reference to a specific paragraph indicates the number of paragraphs that are counted when beginning at the previous chapter heading&thinsp;&mdash;&thinsp;and not from any other division heading level.</p>
+<h4 id="heading-numbering-and-table-of-contents-formatting">Heading numbering and table-of-contents formatting (<code>tocfmt</code>)</h4>
+<p><code>tocfmt</code> is a javascript annotation config property that holds the simplest declaration possible for selecting and applying one out of 21 core, heading numbering formats.</p>
+<p>The 1-6 levels represented in a <code>tocfmt</code> heading number (hdgnbr) are the 1-6 consecutive h-tag levels that are meant by the author to be enumerated.</p>
+<p>The HTML standard provides six total h-tag levels, which allows for the possibility of 21 hdgnbr variations. However, 12 of these 21 variations are sufficient to meet most scenario needs, given the following practical and aesthetic considerations:</p>
+<ol>
+<li>a hdgnbr should have no more than four levels represented;</li>
+<li>a hdgnbr should retain the option of no fewer than four levels represented; and</li>
+<li>a hdgnbr should not ordinarily need to accommodate chapters that are unnecessarily/arbitrarily designated with the lowest h4, h5 or h6 HTML tags.</li>
+</ol>
+<p>Thus, 12 variations are suggested here as the practical maximum&thinsp;&mdash;&thinsp;a guideline for standardizing the divisioning within books and documents of various kinds, thereby fostering ease of comprehension among readers. And yet, exceptions are often made. So, all 21 variations are available.</p>
+<h4 id="configuration"><code>tocfmt</code> configuration</h4>
+<p>The 21 core, hdgnbr formats are declared with two parameters:</p>
+<ol>
+<li>Top h-tag level to be enumerated (i.e., that level which fills the first position of hdgnbr)</li>
+<li>Total number of sequential h-tag levels to be enumerated (i.e., number of delineated positions desired in hdgnbr)</li>
+</ol>
+<p>One additional (22nd) hdgnbr variation is declarable by these parameters in order to generate no hdgnbr. (Set either parameter to <code>0</code>).</p>
+<p>Beyond the scope of the hdgnbr strategies given above, additional <code>tocfmt</code> variations are possible.</p>
+<ul>
+<li>Optionally, <code>tocfmt</code> may also indicate which of the non-enumerated h-tag levels are meant to be listed in the table of contents.</li>
+<li>For chapter headings, <code>tocfmt</code> may designate a non-standard h-tag level (i.e., a chapter level other than h3 or highest available).</li>
+<li>And, <code>tocfmt</code> may provide alternate, custom separators to delineate each of the h-tag levels that are represented in the hdgnbr.</li>
+</ul>
+<p><code>tocfmt</code> configuration may be made either with a string or with an array.</p>
+<p>The string and the array <code>tocfmt</code> configurations each declare the same information as the other; choosing one over the other is unimportant and depends only on personal preference. (Internally, the parser expects an array and, finding none, first converts a proper string into an array, anyway.)</p>
+<p>Following are illustrations of each.</p>
+<h5 id="string-the-21-1-core-variations">String <code>tocfmt</code>, the 21 + 1 core variations</h5>
+<p>Example <code>tocfmt</code> as string: <code>#h2-#h3.#ch4 h5</code></p>
+<p><em>A hash (<code>#</code>) or an <code>e</code> character in front of the following h-labels indicates enumeration&thinsp;&mdash;&thinsp;i.e., inclusion of that h-level in hdgnbr. Hashes (or <code>e</code>s) must be sequentially arranged, without skipping h-levels.</em></p>
+<p><em>For custom styling of hdgnbr, spaces between the following h-labels may be replaced with one or more non-alphanumeric separator characters. (Note: spaces have no function and may be omitted.)</em></p>
+<p><em>Unrelated to hdgnbr (but influencing hdgnbr format selection), a non-standard chapter-level designation may be indicated with a <code>c</code> character in front of the desired h-label. Also, a non-standard paragraph-numbering restart level may be indicated with an <code>r</code> character.</em></p>
+<p><em>For custom formatting of table of contents, non-enumerated h-labels may be included or excluded.</em></p>
+<p><em>Common configurations are indicated with an asterisk (*). hdgnbr format/style suggestions follow select options.</em></p>
+<pre><code>Standard options
+ #h0  h1  h2  h3  h4  h5  h6  *generates no hdgnbr
+  (optionally, use either #/e, c, r or no h0-indicator)
+
+  h0 #h1  h2  h3  h4  h5  h6
+  h0 #h1 #h2  h3  h4  h5  h6
+  h0 #h1 #h2 #h3  h4  h5  h6
+  h0 #h1 #h2 #h3 #h4  h5  h6
+  h0  h1 #h2  h3  h4  h5  h6  *pt
+  h0  h1 #h2 #h3  h4  h5  h6  *pt.ch
+  h0  h1 #h2 #h3 #h4  h5  h6   pt-ch.sect
+  h0  h1 #h2 #h3 #h4 #h5  h6   pt-ch.sect.sect
+  h0  h1  h2 #h3  h4  h5  h6  *ch
+  h0  h1  h2 #h3 #h4  h5  h6   ch.sect
+  h0  h1  h2 #h3 #h4 #h5  h6   ch.sect.sect
+  h0  h1  h2 #h3 #h4 #h5 #h6
+
+Non-standard options
+  h0 #h1 #h2 #h3 #h4 #h5  h6
+  h0 #h1 #h2 #h3 #h4 #h5 #h6
+
+  h0  h1 #h2 #h3 #h4 #h5 #h6
+ 
+  h0  h1  h2  h3 #h4  h5  h6
+  h0  h1  h2  h3 #h4 #h5  h6
+  h0  h1  h2  h3 #h4 #h5 #h6
+  h0  h1  h2  h3  h4 #h5  h6
+  h0  h1  h2  h3  h4 #h5 #h6
+  h0  h1  h2  h3  h4  h5 #h6
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Represents</th>
+<th>Declares</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>h</code></td>
+<td>Heading level</td>
+<td>List h-tag level in toc.</td>
+</tr>
+<tr>
+<td><code>e</code> or <code>#</code></td>
+<td>Enumeration&nbsp;level</td>
+<td>Represent h-tag level in hdgnbr. (Note: in case hdgnbr is styled using <code>#</code> character in separators, indicate enumeration level with <code>e</code> instead of <code>#</code>.)</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>Chapter level</td>
+<td>Designate a non-standard chapter h-tag level for auto-navigation &amp; auto-paragraph-numbering purposes.</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>Reset level</td>
+<td>Designate a non-standard h-tag level that resets paragraph count, independent of chapter h-tag level. A standalone <code>r</code> at end of string switches paragraph counter off.</td>
+</tr>
+</tbody>
+</table>
+<h5 id="array-the-21-1-core-variations">Array <code>tocfmt</code>, the 21 + 1 core variations</h5>
+<p>Example <code>tocfmt</code> as array: <code>[2, 3, 2, 4, 4, null, &quot;&quot;, &quot;-&quot;, &quot;.&quot;, &quot;&quot;]</code></p>
+<p><em>In the following arrays, the hdgnbr format is indicated with the first two indexes (0 &amp; 1) only.</em></p>
+<p><em>For custom styling of hdgnbr, strings of non-alphanumeric separator characters may be added to the following arrays&thinsp;&mdash;&thinsp;beginning at index number 6 (1st-position lead symbol, usually left as empty string, <code>&quot;&quot;</code>) and following a sequence that corresponds to hdgnbr positions (trail symbol of each).</em></p>
+<p><em>Unrelated to hdgnbr (but influencing hdgnbr format selection), a non-standard chapter-level designation may be indicated by including the desired h-tag level number at index number 4. Also, a non-standard paragraph-numbering restart level may be indicated at index number 5.</em></p>
+<p><em>For custom formatting of table of contents, non-enumerated h-levels may be indicated using indexes 2 (top h-tag level) and 3 (number of sequential h-tag levels).</em></p>
+<p><em>Common configurations are indicated with an asterisk (*).</em></p>
+<pre><code>Standard options
+  [0, 0, 1, 6, null, null]  *generates no hdgnbr
+
+  [1, 1, 1, 6, null, null]
+  [1, 2, 1, 6, null, null]
+  [1, 3, 1, 6, null, null]
+  [1, 4, 1, 6, null, null]
+  [2, 1, 1, 6, null, null]  *
+  [2, 2, 1, 6, null, null]  *
+  [2, 3, 1, 6, null, null]
+  [2, 4, 1, 6, null, null]
+  [3, 1, 1, 6, null, null]  *
+  [3, 2, 1, 6, null, null]
+  [3, 3, 1, 6, null, null]
+  [3, 4, 1, 6, null, null]
+
+Non-standard options
+  [1, 5, 1, 6, null, null]
+  [1, 6, 1, 6, null, null]
+
+  [2, 5, 1, 6, null, null]
+
+  [4, 1, 1, 6, null, null]
+  [4, 2, 1, 6, null, null]
+  [4, 3, 1, 6, null, null]
+  [5, 1, 1, 6, null, null]
+  [5, 2, 1, 6, null, null]
+  [6, 1, 1, 6, null, null]
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Index#</th>
+<th>Declares</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0, 1</td>
+<td><li>Highest h-tag level that gets enumerated (i.e., represented in hdgnbr), &amp; </li><li>Quantity of sequential h-tag levels that get enumerated (i.e., represented in hdgnbr) </li></td>
+</tr>
+<tr>
+<td>2, 3</td>
+<td><li>Highest h-tag level that gets listed in toc, &amp; </li><li>Quantity of sequential h-tag levels that get listed in toc </li>These two parameters are often unnecessary as a <code>null</code> in either slot here declares: match corresponding setting provided in indexes 0 &amp; 1</td>
+</tr>
+<tr>
+<td>4</td>
+<td>H-tag level that is assigned to ch heading level (&amp; that restarts paragraph numbering) <li>A <code>null</code> here indicates a standard/fallback option (i.e., h3 or highest available) </li><li>A <code>0</code> here switches auto-navigation off, switches hdgnbr off &amp; restarts paragraph numbering at no heading level (i.e., counts total number of doc paragraphs) </li></td>
+</tr>
+<tr>
+<td>5</td>
+<td>H-tag level that triggers paragraph count reset (necessary only if different from ch heading level) <li>A <code>null</code> here indicates a standard/fallback option (same as for index #4) </li><li>A <code>0</code> here restarts paragraph numbering at no heading level (as it does at index #4) </li><li>A <code>7</code> or higher number here switches paragraph counter off </li></td>
+</tr>
+<tr>
+<td>6</td>
+<td>A string (usually empty, <code>&quot;&quot;</code>) of non-alphanumeric characters that leads hdgnbr 1st position</td>
+</tr>
+<tr>
+<td>7+</td>
+<td>A string of non-alphanumeric characters that trails a corresponding hdgnbr position (i.e., index #7 follows pos. #1, index #8 follows pos. #2, etc.)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="auto-config"><code>tocfmt</code> auto-config</h5>
+<p>Automatic configuration is declared either by not setting the <code>tocfmt</code> property or by setting the <code>tocfmt</code> property to one of the following values: <code>&quot;auto&quot;</code>, <code>null</code>, <code>false</code>, <code>[]</code>, <code>0</code>.</p>
+<p>The resulting behavior varies with the document structure and the availability of its heading levels. Following are all possible auto-configuration results in a list that shows the algorithmic order of precedence.</p>
+<table>
+<thead>
+<tr>
+<th>Criteria for document</th>
+<th>String&nbsp;config</th>
+<th>Array&nbsp;config</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1) recurring h1, h2, h3</td>
+<td><code>#h1.#h2.#h3</code></td>
+<td><code>[1, 3, 1, 3]</code></td>
+</tr>
+<tr>
+<td>2) recurring h2, h3; 1 or no h1</td>
+<td><code>h1 #h2.#h3</code></td>
+<td><code>[2, 2, 1, 3]</code></td>
+</tr>
+<tr>
+<td>3) recurring h3; 1 or no h1, h2</td>
+<td><code>h1 h2 #h3.</code></td>
+<td><code>[3, 1, 1, 3]</code></td>
+</tr>
+<tr>
+<td>4) recurring h1, h2 (&amp; no h3)</td>
+<td><code>#h1.#h2</code></td>
+<td><code>[1, 2, 1, 2]</code></td>
+</tr>
+<tr>
+<td>5) recurring h2; 1 or no h1 (&amp; no h3)</td>
+<td><code>h1 #h2.</code></td>
+<td><code>[2, 1, 1, 2]</code></td>
+</tr>
+<tr>
+<td>6) recurring h1 (&amp; no h2, h3)</td>
+<td><code>#h1.</code></td>
+<td><code>[1, 1, 1, 1]</code></td>
+</tr>
+<tr>
+<td>7) recurring h4/h5/h6 (&amp; no higher h-tags)</td>
+<td><code>#h4.</code>/<code>#h5.</code>/<code>#h6.</code></td>
+<td><code>[4/5/6, 1, 4/5/6, 1]</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="formatting-hdgnbr-some-technical-considerations">Formatting hdgnbr, some technical considerations</h4>
+<p>Existing document h-tag structures, together with a <code>tocfmt</code> property declaration, establish</p>
+<ul>
+<li>
+<p>which h-assignment is ch (Unless otherwise specified, ch becomes lowest of non-absent, enumerated h1-h3 tags, or highest of non-absent, enumerated h4-h6 tags. More specifically, <code>tocfmt</code> assumes h3 = ch, unless otherwise specified or unless h3s are absent from document. Note that ch can occupy 1st/2nd/3rd number position, as corresponding with ch/pt-ch/vol-pt-ch hdgnbr format.)</p>
+</li>
+<li>
+<p>whether hdgnbr includes or excludes vol/pt (vol/pt are enumerated, recurring h-tag levels higher than designated ch level.)</p>
+</li>
+<li>
+<p>number of hdgnbr section levels under ch (Sub-chapter sections are enumerated h-tag levels lower than designated ch level.)</p>
+</li>
+<li>
+<p>paragraph numbering restart levels (Counter is ordinarily reset at ch h-tag level plus at all higher recurring h-tag levels, whether ch h-designation is automated or is specified.)</p>
+</li>
+<li>
+<p>how each h-tag level of toc may or may not affect toc hdgnbr &amp; paragraph-counter hdgnbr (Enumerated &amp; recurring, non-enumerated h-tag levels at &amp; above ch level affect every hdgnbr. Non-enumerated h-tag levels of toc below ch level do not affect any hdgnbr. Enumerated h-tag levels below ch level affect toc hdgnbr but do not increment paragraph-counter hdgnbr&thinsp;&mdash;&thinsp;unless specifically configured otherwise.)</p>
+</li>
+</ul>
+<p>These and other considerations all can shape an author&rsquo;s final formatting decision for the automatic generating of a document&rsquo;s hdgnbr.</p>
+<!--
+#### `tocfmt` version convert (0.9.5 to 0.9.6)
+
+| v0.9.5 | v0.9.6 str    | v0.9.6 arr    |
+| ------ | ------------- | ------------- |
+| null   | h2 h3 h4      | [0, 0, 2, 3]  |
+| -1     | h2 h3 h4 #    | [-1, 0, 2, 3] |
+| 0      | #/#h23/#h2.#h3| [2, 2, 2, 1/2]|
+| 1      | #h2 h3 h4     | [2, 1, 2, 3]  |
+| 2      | #h2           | [2, 1, 2, 1]  |
+| 3      | h2 #h3        | [3, 1, 2, 2]  |
+| 4      | h2 #h3 h4     | [3, 1, 2, 3]  |
+
+ ch0  h1  h2  h3  h4  h5  h6 r *generates no hdgnbr & switches paragraph count off
+-->
+</body>
+</html>
