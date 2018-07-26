@@ -6,4 +6,4 @@ __Project purpose:__ Learn publishing and coding together.
 
 __Working sub-branches__
 
-- [sds](./sds/README.md) : Source-Doc Standard
+- [sds](./sds/README.md) : Source-doc standard
