@@ -9,6 +9,9 @@
 > Fantasy is escapist, and that is its glory. If a soldier is imprisioned by the enemy, don’t we consider it his duty to escape? ... If we value the freedom of mind and soul, if we’re partisans of liberty, then it’s our plain duty to escape, and to take as many people with us as we can!  
 > —J.R.R. Tolkien (1892-1973)
 
+> Real art creates myths a society can live instead of die by ...  
+> (Gardner, John; *On Moral Fiction*, 1978, p. 126)
+
 __Project purpose:__ Learn publishing and coding together.
 
 - [HTML eBook](https://jahoward11.github.com/edutech/epub/hjas18_htmlebook.html)
