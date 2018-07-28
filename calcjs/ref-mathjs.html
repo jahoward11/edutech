@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>JavaScript Math Reference</title>
+<meta charset='utf-8' />
+<meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes" />
+</head>
+<body>
+<style type='text/css'>
+#rsltbox2 { width: 160px; float: left; }
+#rsltbox3>div { background: WhiteSmoke; }
+html {
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+}
+body {
+	width: 752px;
+	margin: 56px auto;
+	padding: 8px 16px;
+//	word-wrap: break-word;
+//	outline: Yellow solid 1px;
+}
+pre, xmp {
+//	white-space: pre-wrap;
+}
+.note {
+	color: LightSteelBlue;
+}
+#rsltbox3, #rsltbox2, #rsltbox1 {
+//	-moz-box-sizing: border-box; /* Firefox */
+//	-webkit-box-sizing: border-box;
+	box-sizing: border-box; /* W3C, IE10, Safari, Opera, and Chrome */
+	margin: 0;
+	font-size: medium;
+}
+#rsltbox3 {
+	display: inline-block;
+	width: 752px;
+//	background: #e2e2dc;
+	padding: 0;
+	background: LightSteelBlue;
+//	clear: right;
+}
+#rsltbox3>div {
+//	margin: 0;
+	padding: 2px;
+	background: unset;
+}
+#rsltbox2, #rsltbox1 {
+	min-height: 480px;
+	padding: 2px;
+//	white-space: pre;
+//	word-wrap: normal;
+	float: left;
+}
+#rsltbox2 {
+	width: 160px;
+	text-align: right;
+	color: WhiteSmoke;
+//	background: Silver;
+	background: DarkGray;
+//	background: LightSlateGray;
+//	overflow-x: hidden;
+}
+#rsltbox1 {
+	width: 592px;
+//	margin-left: 160px;
+	background: #f9f9f9;
+//	overflow-x: auto;
+}
+@media print {
+	body { margin: 0 auto; padding: 0; }
+}
+</style>
+<pre id=promptbox style="display: none">
+
+d.x = 0.5
+d.y = 3
+d.z = -25
+
+// ### JavaScript Math Object ###
+
+// Property	Description
+ Math.E		// Returns Euler's number (approx. 2.718)
+ Math.LN2	// Returns the natural logarithm of 2 (approx. 0.693)
+ Math.LN10	// Returns the natural logarithm of 10 (approx. 2.302)
+ Math.LOG2E	// Returns the base-2 logarithm of E (approx. 1.442)
+ Math.LOG10E	// Returns the base-10 logarithm of E (approx. 0.434)
+ Math.PI	// Returns PI (approx. 3.14)
+ Math.SQRT1_2	// Returns the square root of 1/2 (approx. 0.707)
+ Math.SQRT2	// Returns the square root of 2 (approx. 1.414)
+
+// Method		Description
+ Math.sin(d.x)	// Returns the sine of d.x (d.x is in radians)
+ Math.cos(d.x)	// Returns the cosine of d.x (d.x is in radians)
+ Math.tan(d.x)	// Returns the tangent of an angle
+ 
+ Math.asin(d.x)	// Returns the arc-sine of d.x, in radians
+ Math.acos(d.x)	// Returns the arc-cosine of d.x, in radians
+ Math.atan(d.x)	// Returns the arc-tangent of d.x as a numeric value between
+		// -PI/2 and PI/2 radians
+ Math.atan2(d.y,d.x)// Returns the arc-tangent of the quotient of its arguments
+
+ Math.acosh(3)	// Returns the hyperbolic arc-cosine of a number
+ Math.hypot(3, 4)
+		// Returns the square root of the sum of squares of its
+		// arguments
+ Math.imul(Math.pow(2, 32) - 1, Math.pow(2, 32) - 2)
+		// Returns the result of the C-like 32-bit multiplication of
+		// the two parameters
+ 
+ Math.abs(d.z)	// Returns the absolute value of d.x
+ Math.sqrt(d.x)	// Returns the square root of d.x
+ Math.pow(d.x,d.y)	// Returns the value of d.x to the power of d.y
+ Math.exp(1)	// Returns the value of E to the power of d.x
+ Math.log(2)	// Returns the natural logarithm (base E) of d.x
+ 
+ Math.round(d.x)	// Rounds d.x to the nearest integer
+ Math.ceil(d.x)	// Returns d.x, rounded upwards to the nearest integer
+ Math.floor(d.x)	// Returns d.x, rounded downwards to the nearest integer
+ 
+ Math.min(d.x,d.y,d.z)// Returns the number with the lowest value (d.x,d.y,d.z,...,n)
+ Math.max(d.x,d.y,d.z)// Returns the number with the highest value (d.x,d.y,d.z,...,n)
+ 
+ Math.random()	// Returns a random number between 0 and 1
+
+// ### JavaScript Number Object ###
+
+// Property	Description
+ d.z.constructor	// Returns the function that created JavaScript's Number  
+		// prototype
+
+ Number.EPSILON
+ Number.MAX_VALUE
+		// Returns the largest number possible in JavaScript
+ Number.MIN_VALUE
+		// Returns the smallest number possible in JavaScript
+ Number.NEGATIVE_INFINITY
+		// Represents negative infinity (returned on overflow)
+ Number.NaN	// Represents a "Not-a-Number" value
+ Number.POSITIVE_INFINITY
+		// Represents infinity (returned on overflow)
+ Number.prototype
+		// Allows you to add properties and methods to an object
+
+// Method		Description
+ Number.isFinite(d.z)
+		// Checks whether a value is a finite number
+ Number.isInteger(d.z)
+		// Checks whether a value is an integer
+ Number.isInteger(Infinity)
+		// false
+ Number.isNaN(d.z)// Checks whether a value is Number.NaN
+ Number.isNaN("NaN")
+		// false
+ Number.isSafeInteger(d.z)
+		// Checks whether a value is a safe integer
+
+ d.z.toExponential(5)
+		// Converts a number into an exponential notation
+ d.z.toFixed(5)	// Formats a number with d.x numbers of digits after the decimal
+		// point
+ d.z.toPrecision(5)
+		// Formats a number to d.x length
+ d.z.toString(2)	// Converts a number to a string;
+		// d.z.toString(radix), radix: 2, 8, 16
+ d.z.valueOf()	// Returns the primitive value of a number
+
+</pre>
+<p><strong>JavaScript Math Reference</strong></p>
+<pre id=rsltbox3>
+<pre id=rsltbox2></pre><pre id=rsltbox1></pre></pre>
+&nbsp;
+<script type='text/javascript'>
+window.onload = function () {
+let d = {},
+  promptbox = window.document.querySelector('#promptbox'),
+  rsltbox1 = window.document.querySelector('#rsltbox1'),
+  rsltbox2 = window.document.querySelector('#rsltbox2'),
+  rsltbox3 = window.document.querySelector('#rsltbox3'),
+  expressions = promptbox.innerHTML.trim().split('\n'),
+  results = expressions.map(xpr => { try { return (eval(xpr) !== undefined ? eval(xpr) : "&nbsp;").toString().substr(0, 18); } catch (err) { return err; } });
+rsltbox1.innerHTML = expressions.map(xpr => xpr.replace(/\/\/ ?(.*)/, "<span class=note>$1</span>")).join('\n').replace(/\bd\.(?=\w)/g, "");
+rsltbox2.innerHTML = results.join('\n');
+rsltbox3.innerHTML = "<div>" + Object.entries(d).map(e => e[0] + " = " + e[1]).join('\n') + "</div>" + rsltbox3.innerHTML;
+};
+</script>
+</body>
+</html>

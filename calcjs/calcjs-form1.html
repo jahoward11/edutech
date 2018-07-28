@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>iPad Screen/View Dimensions</title>
+<meta charset='utf-8' />
+<meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes" />
+</head>
+<body>
+<style type='text/css'>
+#rsltbox2 { width: 160px; float: left; }
+#rsltbox3>div { background: WhiteSmoke; }
+html {
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+}
+body {
+	width: 560px;
+	margin: 56px auto;
+	padding: 8px 16px;
+//	word-wrap: break-word;
+//	outline: Yellow solid 1px;
+}
+pre, xmp {
+//	white-space: pre-wrap;
+}
+.note {
+	color: LightSteelBlue;
+}
+#rsltbox3, #rsltbox2, #rsltbox1 {
+//	-moz-box-sizing: border-box; /* Firefox */
+//	-webkit-box-sizing: border-box;
+	box-sizing: border-box; /* W3C, IE10, Safari, Opera, and Chrome */
+	margin: 0;
+	font-size: medium;
+}
+#rsltbox3 {
+	display: inline-block;
+	width: 560px;
+//	background: #e2e2dc;
+	padding: 0;
+	background: LightSteelBlue;
+//	clear: right;
+}
+#rsltbox3>div {
+	margin: 0;
+	padding: 2px;
+	background: unset;
+}
+#rsltbox2, #rsltbox1 {
+	min-height: 480px;
+	padding: 2px;
+//	white-space: pre;
+//	word-wrap: normal;
+	float: left;
+}
+#rsltbox2 {
+	width: 160px;
+	text-align: right;
+	color: WhiteSmoke;
+//	background: Silver;
+	background: DarkGray;
+//	background: LightSlateGray;
+//	overflow-x: hidden;
+}
+#rsltbox1 {
+	width: 400px;
+//	margin-left: 160px;
+	background: #f9f9f9;
+//	overflow-x: auto;
+}
+@media print {
+	body { margin: 0 auto; padding: 0; }
+}
+</style>
+<pre id=promptbox style="display: none">
+
+// Initial values
+d.x = 15
+d.y = 8
+d.z = 0.67
+
+// New values
+d.x = d.x + 4
+d.y = d.y + 4
+d.z = d.z + 4
+
+</pre>
+<p><strong>JavaScript Calculation Form 1</strong></p>
+<pre id=rsltbox3>
+<pre id=rsltbox2></pre><pre id=rsltbox1></pre></pre>
+&nbsp;
+<script type='text/javascript'>
+window.onload = function () {
+let d = {},
+  promptbox = window.document.querySelector('#promptbox'),
+  rsltbox1 = window.document.querySelector('#rsltbox1'),
+  rsltbox2 = window.document.querySelector('#rsltbox2'),
+  rsltbox3 = window.document.querySelector('#rsltbox3'),
+  expressions = promptbox.innerHTML.trim().split('\n'),
+  results = expressions.map(xpr => { try { let rslt = eval(xpr); return (rslt !== undefined ? rslt : "&nbsp;").toString().substr(0, 18); } catch (err) { return err; } });
+rsltbox1.innerHTML = expressions.map(xpr => xpr.replace(/\/\/ ?(.*)/, "<span class=note>$1</span>")).join('\n').replace(/\bd\.(?=\w)/g, "");
+rsltbox2.innerHTML = results.join('\n');
+rsltbox3.innerHTML = "<div>" + Object.entries(d).map(e => e[0] + " = " + e[1]).join('\n') + "</div>" + rsltbox3.innerHTML;
+}
+</script>
+</body>
+</html>

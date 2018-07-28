@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>iPad Screen/View Dimensions</title>
+<meta charset='utf-8' />
+<meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes" />
+</head>
+<body>
+<style type='text/css'>
+#rsltbox2 { width: 160px; float: left; }
+#rsltbox3>div { background: WhiteSmoke; }
+html {
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+}
+body {
+	width: 560px;
+	margin: 56px auto;
+	padding: 8px 16px;
+//	word-wrap: break-word;
+//	outline: Yellow solid 1px;
+}
+pre, xmp {
+//	white-space: pre-wrap;
+}
+.note {
+	color: LightSteelBlue;
+}
+#rsltbox3, #rsltbox2, #rsltbox1 {
+//	-moz-box-sizing: border-box; /* Firefox */
+//	-webkit-box-sizing: border-box;
+	box-sizing: border-box; /* W3C, IE10, Safari, Opera, and Chrome */
+	margin: 0;
+	font-size: medium;
+}
+#rsltbox3 {
+	display: inline-block;
+	width: 560px;
+//	background: #e2e2dc;
+	padding: 0;
+	background: LightSteelBlue;
+//	clear: right;
+}
+#rsltbox3>div {
+	margin: 0;
+	padding: 2px;
+	background: unset;
+}
+#rsltbox2, #rsltbox1 {
+	min-height: 480px;
+	padding: 2px;
+//	white-space: pre;
+//	word-wrap: normal;
+	float: left;
+}
+#rsltbox2 {
+	width: 160px;
+	text-align: right;
+	color: WhiteSmoke;
+//	background: Silver;
+	background: DarkGray;
+//	background: LightSlateGray;
+//	overflow-x: hidden;
+}
+#rsltbox1 {
+	width: 400px;
+//	margin-left: 160px;
+	background: #f9f9f9;
+//	overflow-x: auto;
+}
+@media print {
+	body { margin: 0 auto; padding: 0; }
+}
+</style>
+<pre id=promptbox style="display: none">
+
+// px-to-in reference points
+ 12 / 96	// 1/8 in
+ 16 / 96	// 1/6 in (1em)
+ 24 / 96	// 1/4 in
+ 32 / 96	// 1/3 in (2em)
+ 36 / 96	// 3/8 in
+ 48 / 96	// 1/2 in (3em)
+ 60 / 96	// 5/8 in
+ 64 / 96	// 2/3 in (4em)
+ 72 / 96	// 3/4 in
+ 80 / 96	// 5/6 in (5em)
+ 84 / 96	// 7/8 in
+
+ 96 / 96	// in (6em)
+ 192 / 96	// in
+ 288 / 96	// in
+ 384 / 96	// in
+ 480 / 96	// in
+ 576 / 96	// in
+ 672 / 96	// in
+ 768 / 96	// in
+ 864 / 96	// in
+ 960 / 96	// in
+
+ 108 / 96	// 9/8 in
+ 216 / 96	// 9/4 in
+ 432 / 96	// 9/2 in
+ 864 / 96	// 9 in
+
+ 128 / 96	// 4/3 in
+ 256 / 96	// 8/3 in
+ 512 / 96	// 16/3 in
+ 1024 / 96	// 32/3 in
+
+// ipad effective page width (in)
+ d.wp = 1024 / 96
+// ipad effective page height (in)
+ d.hp = 768 / 96
+
+// ratio, screen-to-page width
+ d.rsp = 7.75 / d.wp // d.rsp : std reduction
+// ratio, screen-to-page height
+ 5.8125 / d.hp
+
+// ratio, page-to-screen width
+ d.wp / 7.75
+// ratio, page-to-screen height
+ d.hp / 5.8125
+
+// physical screen width of test columns (in)
+ 6.75 * d.rsp
+ 6 * d.rsp
+ 4 + 23/64
+ 4 * d.rsp
+ 2 + 29/32
+
+// 6.38in : max expansion of 4-in column
+ 6 + 3/8	// (in)
+ 6 + 25/64	// (in)
+ 6.38 / (4 * d.rsp)// screen max-to-std ratio
+
+// page-setup standards (content box)
+ 8 * 96 - 32 // 3/4 web std or 8in, less 2em (px)
+ 736 / 96	// (in)
+ 736 - 32	// img max-width (px)
+ 7.5 * 96 * 2/3 // img max-height (px)
+
+ 7.5 * 96	// ltr-size column max-width (px)
+ 7.5 * 96 - 32	// img max-width (px)
+ 7.5 * 96 * 2/3 // img max-height (px)
+
+ 7.125 * 96	// phone-landscape border box (px)
+ 6.75 * 96 + 4	// content box max-width (px)
+ 6.75 * 96 - 28 // img max-width (px)
+ 6.75 * 96 * 2/3// img max-height (px)
+
+ 6.75 * 96	// hjas 1-column max-width (px)
+ 6.75 * 96 - 32 // img max-width (px); 6 5/12in
+ 6.75 * 96 * 2/3// img max-height (px); 4.5in
+
+ 6.5 * 96 + 8 // dropbox-ipad border box; 6 7/12in
+ 6.5 * 96 - 8	// content box max-width; 6 5/12in
+ 6.375 * 96 + 4 // content box max-width (px)
+ 6.375 * 96	// content box max-width- (px)
+ 6.5 * 96 - 40	// img max-width (px); 6 1/12in
+ 6.5 * 96 * 2/3 // img max-height (px); 4.375in
+
+ 6 * 96 + 32	// hjas 8-column border box (px)
+ 6 * 96 + 16	// content box max-width (px)
+ 6 * 96		// img max-width (px); 6in
+ 6 * 96 * 2/3 + 16// img max-height (px); 4.167in
+
+ 6 * 96	// 72-monospace-char column width (px)
+ 6 * 96 - 32	// img max-width (px)
+ 6 * 96 * 2/3	// img max-height (px)
+
+ 37/6 * 96	// gmail-ipad border box (px)
+ 35/6 * 96	// content box max-width (px)
+ 35/6 * 96 - 32 // img max-width (px)
+ 6 * 96 * 2/3	// img max-height (px)
+
+ 4 * 96 + 28	// phone-portrait border box (px)
+ 4 * 96 - 4	// content box max-width (px)
+ 4 * 96 - 20	// img max-width (px)
+ 4 * 96 * 2/3	// img max-height (px)
+
+</pre>
+<p><strong>iPad Screen/View Dimensions</strong></p>
+<pre id=rsltbox3>
+<pre id=rsltbox2></pre><pre id=rsltbox1></pre></pre>
+&nbsp;
+<script type='text/javascript'>
+window.onload = function () {
+let d = {},
+  promptbox = window.document.querySelector('#promptbox'),
+  rsltbox1 = window.document.querySelector('#rsltbox1'),
+  rsltbox2 = window.document.querySelector('#rsltbox2'),
+  rsltbox3 = window.document.querySelector('#rsltbox3'),
+  expressions = promptbox.innerHTML.trim().split('\n'),
+  results = expressions.map(xpr => { try { let rslt = eval(xpr); return (rslt !== undefined ? rslt : "&nbsp;").toString().substr(0, 18); } catch (err) { return err; } });
+rsltbox1.innerHTML = expressions.map(xpr => xpr.replace(/\/\/ ?(.*)/, "<span class=note>$1</span>")).join('\n').replace(/\bd\.(?=\w)/g, "");
+rsltbox2.innerHTML = results.join('\n');
+rsltbox3.innerHTML = "<div>" + Object.entries(d).map(e => e[0] + " = " + e[1]).join('\n') + "</div>" + rsltbox3.innerHTML;
+}
+</script>
+</body>
+</html>
