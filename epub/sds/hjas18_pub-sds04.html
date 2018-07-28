@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<title>Publishing: On Parsing a Source Doc</title>
+<meta charset='utf-8' />
+<meta name='viewport' content="width=device-width, initial-scale=1, user-scalable=yes" />
+<style type='text/css'>
+a { color: rgb(65, 131, 196); text-decoration: none; }
+a:visited { color: rgb(65, 131, 196); }
+a:hover { color: rgb(65, 131, 196); text-decoration: underline; }
+a:active { color: rgb(65, 131, 196); text-decoration: underline; }
+a:focus { outline: rgb(51, 51, 51) dotted thin; }
+p { margin: 1em 0px; line-height: 1.4em; }
+img { max-width: 100%; }
+h1, h2, h3, h4, h5, h6 { font-weight: bold; line-height: 1em; margin-top: 1.4em; margin-bottom: 0.5em; }
+h4, h5, h6 { font-weight: bold; }
+h1 { font-size: 32px; }
+h2 { font-size: 26px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+h5 { font-size: 14px; }
+h6 { font-size: 12px; }
+blockquote { color: rgb(153, 153, 153); margin: 0px; padding-left: 20px; border-left-width: 5px; border-left-style: solid; border-left-color: rgb(238, 238, 238); }
+hr { display: block; height: 1px; border-width: 0px 0px 1px; border-top-style: solid; border-top-color: rgb(170, 170, 170); border-bottom-style: solid; border-bottom-color: rgb(221, 221, 221); margin: 1em 0px; padding: 0px; }
+pre, code, kbd, samp { color: rgb(102, 102, 102); font-family: Menlo, Consolas, "Courier New", courier, monospace; font-size: 12px; }
+pre { background-color: rgb(250, 250, 250); border: 1px solid rgb(221, 221, 221); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; padding: 10px 15px; }
+pre code { border: 0px; }
+code { background-color: rgb(250, 250, 250); padding: 2px 4px; border: 1px solid rgb(221, 221, 221); border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; color: rgb(221, 17, 68); }
+b, strong { font-weight: bold; }
+dfn { font-style: italic; }
+ins { background-color: rgb(255, 255, 153); color: rgb(0, 0, 0); text-decoration: none; background-position: initial initial; background-repeat: initial initial; }
+mark { background-color: rgb(255, 255, 0); color: rgb(0, 0, 0); font-style: italic; font-weight: bold; background-position: initial initial; background-repeat: initial initial; }
+sub, sup { font-size: 75%; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+ul, ol { margin: 1em 0px; padding: 0px 0px 0px 2em; }
+li p:last-child { margin: 0px; }
+dd { margin: 0px 0px 0px 2em; }
+img { border: 0px; vertical-align: middle; }
+table { border-collapse: collapse; color: rgb(0, 0, 0); vertical-align: middle; margin-bottom: 1em; }
+table th { padding: 5px 10px; border: 1px solid rgb(238, 238, 238); background-color: rgb(221, 221, 221); }
+table td { padding: 5px 10px; border: 1px solid rgb(238, 238, 238); }
+.toc ul { padding: 0px; }
+.toc ul li { list-style-type: none; }
+#content { margin: 40px 0px; }
+.footer { margin-top: 30px; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(221, 221, 221); text-align: center; padding: 10px; font-size: 13px; color: rgb(170, 170, 170); }
+.hljs-comment, .hljs-quote { color: rgb(142, 144, 140); }
+.hljs-variable, .hljs-template-variable, .hljs-tag, .hljs-name, .hljs-selector-id, .hljs-selector-class, .hljs-regexp, .hljs-deletion { color: rgb(200, 40, 41); }
+.hljs-number, .hljs-built_in, .hljs-builtin-name, .hljs-literal, .hljs-type, .hljs-params, .hljs-meta, .hljs-link { color: rgb(245, 135, 31); }
+.hljs-attribute { color: rgb(234, 183, 0); }
+.hljs-string, .hljs-symbol, .hljs-bullet, .hljs-addition { color: rgb(113, 140, 0); }
+.hljs-title, .hljs-section { color: rgb(66, 113, 174); }
+.hljs-keyword, .hljs-selector-tag { color: rgb(137, 89, 168); }
+.hljs { display: block; overflow-x: auto; background-color: white; color: rgb(77, 77, 76); padding: 0.5em; background-position: initial initial; background-repeat: initial initial; }
+.hljs-emphasis { font-style: italic; }
+.hljs-strong { font-weight: bold; }
+html { -webkit-text-size-adjust: none; }
+body { max-width: 648px; min-width: 560px; margin: 56px auto; padding: 8px; word-wrap: break-word; }
+pre, xmp { white-space: pre-wrap; }
+img { max-width: 616px; max-height: 432px; }
+figure, .figure { margin: 16px 0px; padding: 0px 16px; }
+h4#content { margin: 1.4em 0 0.5em; }
+li p:last-child { margin: 1em 0; }
+.hljs { padding: 0; background: transparent; }
+</style>
+</head>
+<body>
+<header id=header>
+<h1 class="title">Publishing: On Parsing a Source Doc</h1>
+<p class="author">James A. Howard</p>
+<p class="date">2018-07-20</p>
+</header>
+<hr />
+<h2>Source-Doc Standards (SDSs)</h2>
+<h3>Intro: Some Publishing-Craft Subsets — in Brief</h3>
+<p><em>Following is a quick-and-dirty orientation on a subgroup of modern (yet age-old) art forms within the broader scope of</em> Publishing.</p>
+<dl>
+<dt>Typesetting / page layout / page design</dt>
+<dd>
+<p>These are holdover terms from the days of the moveable-type printing press. Though still in use today for analogous desktop-publishing tasks, their meaning has devalued alongside terms that are more relevant to device-oriented publishing processes.</p>
+</dd>
+<dt>Wysiwyg vs. plain-text drafting</dt>
+<dd>
+<p>What-you-see-is-what-you-get (wysiwyg) drafting is common — but doomed forever to inherited inefficiencies. Handling and managing wysiwyg documents will always be a bug-ridden process because no wysiwyg filetype can become universal. For example, no wysiwyg filetype can anticipate all future filesystems developments that will be used to handle it.</p>
+<p>On the other hand, plain-text drafting will always be a universal process; it will always use the universal, plain-text filetype.</p>
+<p>Still, while it is more efficient, plain-text drafting is not as intuitive as wysiwyg drafting. It requires that some unintuitive, core concepts are learned and thoroughly understood first — concepts such as markup, styling and rendering.</p>
+</dd>
+<dt>Rendering</dt>
+<dd>
+<p>The appearance of a modern publication depends on multiple, ever-changing rendering processes. An electronic publication may or may not render the same way on every kind of rendering system (device type, platform type, browser type, etc.). Understanding how to finely control every rendered appearance of a finished publication requires close familiarity with many sophisticated markup and styling concepts.</p>
+</dd>
+<dt>Styling</dt>
+<dd>
+<p>Regarding any kind (traditional or modern) of publication, <em>styling</em> is the peculiar set of all visual enhancements to a document beyond the basic delineations of its structural parts.</p>
+<p>In the publishing industry, the term <em>styling</em> is generally invoked as an antonym and counterpart to the term <em>markup</em> — i.e., to distinguish a document’s visual aesthetics (<em>styling</em>) from its functional structure (<em>markup</em>). However, the boundary between what is <em>styling</em> and what is <em>markup</em> in a document is not always clearly defined.</p>
+</dd>
+<dt>Markup</dt>
+<dd>
+<p>Markup is a set of instructions and protocols that identifies the structural parts of a document of any kind. Many variations, or languages, exist.</p>
+<p>Some of the most useful markup languages have been evolving for two or three generations now — and are continuing to evolve still. (E.g., HTML, LaTeX, Markdown.)</p>
+<p>Some markup languages are heavyweight, or formal, languages — meaning that the set of markers used by one are extensive and can fill just about every publishing need. <a href="https://html5rocks.org/">HTML</a> is the leading example of a heavyweight, <em>online</em> publishing language. <a href="http://en.wikibooks.org/wiki/LaTeX">LaTeX</a> is the leading example of a heavyweight, <em>printed</em> publishing language.</p>
+<p>But, lightweight markup languages also fill a prominent role in publishing.</p>
+</dd>
+<dt>Lightweight markup language (LML)</dt>
+<dd>
+<p><a href="https://en.wikipedia.org/wiki/Lightweight_markup_language">Lightweight markup</a> is a set of markup symbols (markers) and protocols that have a relatively low visual impact — and that can even enhance the visual structure of an otherwise featureless block of plain text. (E.g., <a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>.)</p>
+<p>Writers may benefit highly from the use of lightweight markup. The learning curve for one or another such language is attractively low, and a writer’s productivity can be dramatically enhanced by the freedom that lightweight markup allows him from the extreme technicalities of a formal markup language.</p>
+<p>Technically, a <em>lightweight</em>-markup system is really a <em>proto</em>-markup system — meaning, a document that uses lightweight markup must first undergo script-processing to transform its low-impact markers into formal markup-system elements before it can be rendered as a finished publication.</p>
+</dd>
+<dt>Source Doc</dt>
+<dd>
+<p>A Source Doc is a living (updated and cooperatively maintained) document that meets expectations to be an origin of reference for its downstream publications, as well as for other, related materials.</p>
+</dd>
+<dt>Source-Doc Standards (SDSs)</dt>
+<dd>
+<p>SDSs are any (formal OR informal) set of consistent procedures for marking up (structuring) a document — as established and agreed upon in practice for all Source Docs of a common repository.</p>
+<p>SDSs emerge from an existing collection (public OR private) of <em>well-formed</em> Source Docs.</p>
+</dd>
+</dl>
+<h3>Why the need for a <em>well-formed</em> Source Doc?</h3>
+<p><em>Really now, does</em> every <em>Source Doc need to be well formed?</em></p>
+<p>Understanding the need for well-formalness in a Source Doc requires first distinguishing between two separate elements of a message: <em>content</em> and <em>structure</em>.</p>
+<h4 id="content">Content</h4>
+<p>Some communications are more consumable and fleeting than others: newspaper comics and Facebook status posts, for example.</p>
+<p>But, as the importance, or the need for the endurance of, a particular communication increases, Source-doc well-formalness grows more necessary.</p>
+<p>For example, citizens of the United States share a particularly strong need to keep the current text of the U.S. Constitution preserved as a formal Source Doc — because so many interests depend so deeply upon the current wording and status of every element of every part of the whole document.</p>
+<p>Stated another way, the U.S. Constitution — or any document that affects any group of any size, over time — must have, at any given moment, only one state of meaning. By definition, a document that is allowed to exist in two different states of meaning at one time cannot be a Source Doc. In practice, the scenario of allowing two different, simultaneous states of meaning to exist creates unavoidable confusion and, ultimately, renders a document meaningless. Within such a scenario, a reference to one of the document’s states generates an irresolvable conflict with another reference to the document’s other state. Furthermore, a process that allows even one branching of simultaneous states cannot curb multiple such branchings — thus, cannot prevent a project from degrading into chaos.</p>
+<h4 id="structure">Structure</h4>
+<p>Given that much, the reason for a <em>well-formed</em> Source Doc — in contrast to a <em>poorly-formed</em> Source Doc — is that a casual document-<em>structure</em> error has the potential to create a miscommunication that is just as devastating as a casual document-<em>content</em> error. Attention to <em>content</em> integrity alone — at the expense of <em>structure</em> integrity — is only half a job; and is wholly insufficient. In effect, any decay in a document’s current structure has the same result as the branching of a document’s simultaneous states of meaning: i.e., any degree of allowable structure decay subjects a project to degradation forces and ultimate chaos.</p>
+<p>Thus, only rigorous maintenance of a <em>well-formed</em> Source Doc will ensure that an important communication endures as expected — and that its full, intended meaning is preservable through the natural decay processes of time.</p>
+<h4 id="need">Need</h4>
+<p>No, not every Source Doc needs to be well formed. However, without well-formalness a Source Doc is likely to be rapidly consumed, then lost; with well-formalness, a Source Doc is reasonably fortified and helped to endure.</p>
+<p>Thus, <em>consumable</em> communications do not need to be well formed; but <em>preservation-worthy</em> communications need to be well formed.</p>
+<h3>How much should be <em>markup</em> and how much should be <em>styling</em>?</h3>
+<p>Consider the following example elements of publishing:</p>
+<ul>
+<li>Background color/image</li>
+<li>Article column width/spacing</li>
+<li>Font types/sizes</li>
+<li>Offset spacing/indicators of block-quoted text</li>
+</ul>
+<p>Most publishers would agree that these are <em>styling</em> concerns only — not determined in the <em>markup</em>.</p>
+<p>Conversely, the following list demonstrates commonly recognized <em>markup</em> elements of publishing:</p>
+<ul>
+<li>Text body</li>
+<li>Article header</li>
+<li>Chapter headings</li>
+<li>Numbered list</li>
+<li>Footnotes</li>
+</ul>
+<p>But, consider now the following, less-easily categorized list of publishing elements:</p>
+<ul>
+<li>Poetic line breaks</li>
+<li>Outline numeral types (Roman, alphabetic, linguistic, etc.)</li>
+<li>Variations in table/table-column widths</li>
+<li>Placement/prominence of captions relative to corresponding figures</li>
+</ul>
+<p>Some might argue that such elements are ultimately irrelevant to the core meaning or content of a document — that decisions along these lines should be deferred to the post-compositional process of <em>styling</em>. On the other hand, others could justifiably conclude that the whole meaning and purpose of a text is realized entirely from the specifications made for these, and similar, publishing elements — and, thus, such decisions must be made explicit by the author in the <em>markup</em>.</p>
+<p>Either way, remember that using lightweight markup during composition — even with all of its limitations — is far more favorable than using formal markup. Given that guiding principle, a language must be selected wisely.</p>
+<p>In selecting an LML, not all styling decisions can be accommodated. But, remarkably, many styling decisions can be accommodated. So, a selection should be made based on the most important styling decisions that need to be made by the author in the markup.</p>
+<p>In the end, giving the author <em>some</em> styling choices — and not <em>all possible</em> styling choices — confers to the author the great advantage of getting the composition process going and moving along naturally, without any undue technical hinderance.</p>
+<h3>Top five priorities of a <em>well-formed</em> Source Doc</h3>
+<p><em>What constitutes a</em> well-formed <em>Source Doc?</em></p>
+<p>Answering this question has long been a singular challenge to all publishers alike. Historically, different approaches or goals have resulted in the development of different sets of guiding principles. And experience confirms: not every publishing need can be equally met — not all at once. However, the following list is a composite summary of the priorities that have sprung from — thus, are reasonable accommodations for meeting — common-use publishing needs.</p>
+<p>A Source Doc becomes a <em>well-formed</em> Source Doc by specially modifying its text for:</p>
+<ol>
+<li>
+<p><strong>Dual-media</strong> outputs: print (PDF) and web (HTML)</p>
+<p>A sensible selection of lightweight markups should not only be useful for composition but must also be amenable to simple, open-source scripting processes that can generate both PDF and HTML files — both similarly and both cleanly formatted, without the necessity of excessive, divergent styling.</p>
+<p>The needs and the uses for both printed documents and electronically-deliverable documents in our society today are vast and inestimable. Generating both kinds from a common source is not just an extra bonus; it is a necessity. And this necessity ultimately depends upon the collective set of structural markups that are being used.</p>
+<p>Choosing the right system of markups is more than a simple, one-task process. The most desirable, long-term consequences will result from only a few, select combinations of a thousand, individual markup decisions.</p>
+<p>By continually checking that the print and the web output structures have matching elements and functions, a stronger focus arises to aid in the many, unwieldy markup decisions to be made.</p>
+<p><em>The sniff test:</em> Does the system ensure that PDF and HTML versions of a common document present in the same functional way?</p>
+<p>The advantages of this priority go beyond just offering an initial, common focus. The goal of producing clean, dual-media outputs can also have unexpected benefits — as most other compositional goals are more profitably pursued only after first meeting this initial criterion.</p>
+</li>
+<li>
+<p>Cross-platform-and-device <strong>read/edit</strong>-ability</p>
+<p>The right system of markups would invite no real impediments to reading or editing a Source Doc — irrespective of the device or the platform being used.</p>
+<p>Among the many varieties of computer brands, operating systems and software in general use, Plain Text ( <code>.txt</code> ) is the only universally recognized file type. So, the right system of markups would necessarily make use of strictly Plain Text symbols. More specifically, the right system of markups would consist of recognizable typography to english readers without any special technical training.</p>
+<p>In practical terms, if nothing but a simple text-editing app is being used, a person with a High-school education ought to be able to spontaneously navigate, skim and modify a lengthy document without any cumbersome, technical delays.</p>
+<p>Not insignificantly, this priority implies that a living document ought to be maintainable by a single individual, independently of any corporation-like processes — as well as by multiple members of a team who are each manipulating the same Source Doc.</p>
+</li>
+<li>
+<p>On-the-fly <strong>preview</strong>-ability</p>
+<p>. . . in a few basic, professional styling conventions.</p>
+</li>
+<li>
+<p>On-the-fly <strong>annotat</strong>-ability</p>
+<p>(e.g., paragraph numbering, highlighting, reference linking, navigational linking, etc.)</p>
+</li>
+<li>
+<p><strong>Reverse-engineer</strong>-able outputs</p>
+<p>Output content and structure, both, must be deliberately set up to be <em>intuitively</em> reverse engineer-able — i.e., directly and naturally revertible back into a Source Doc.</p>
+<p>In simpler terms, one ought to be able to automatically reconstruct a lightweight-markup file from either a PDF or an HTML publication file — complete with the original markup tags in tact for such structural elements as emphasized words, strong words, subheadings, tables, etc.</p>
+<p>Including this point as a priority provides multiple additional safeguards for the maintainability of a document over its lifespan. Editors/maintainers must rely on the one, proto-markup language to carry dual sets of instructions at the same time. New additions to these instructions can potentially cause overwhelming complexities that would subsequently corrupt the document’s data. Such is avoided by a strict policy of adding only the kinds of instructions that can be preserved in both its print incarnation (PDF) and its web incarnation (HTML).</p>
+<p>The end result, then, is that at the time of publication to both kinds of output media, a single, theoretical “Source Doc” exists, in reality, as three redundancies in at least three different locations.</p>
+</li>
+</ol>
+<h3>An emerging <em>Source-Doc Standardization</em> (SDS)</h3>
+<p><em>Using the preceding priority list to guide one’s publishing workflow, the following arises as a “best-practices” set of general procedures for creating a</em> well-formed <em>Source Doc.</em></p>
+<p>A common goal of the following procedures is to convey generic structural information as clearly as possible using the least amount of visual clutter as possible. A document that is structured in the way outlined below will be given a minimal format that persists over time — even through the inevitable evolutionary changes of higher-order formats.</p>
+<ol>
+<li>
+<p><strong>Character set limit</strong> : markers are selected from among the us-ascii set</p>
+<p>The web-standard, <a href="https://unicode.org">utf-8</a> set of characters is extensive and meets most every, imaginable need. But not all future parsers can be anticipated to handle so much overhead as the utf-8, and similar systems, demand. So, the set of markers in an LML must be carefully selected from a much smaller, commonly used, subset of characters.</p>
+<p>The traditional, <a href="https://en.m.wikipedia.org/wiki/Ascii">us-ascii</a> set of characters comfortably fills this requirement. It emerged and has evolved from the start, along with the birth and development of computers — in much the same way that the qwerty-keyboard layout, alone, had caught on along with the birth of typewriters, and still persists today.</p>
+<p>Note that the limitation standard here applies strictly to the set of lightweight markup characters being used on a document — not to the characters used in writing the content of a Source Doc. Content character-set limitations are a different issue, and the decisions involved may be left to the writer’s discretion.</p>
+</li>
+<li>
+<p><strong>Inline markup</strong> : character-escaping necessity</p>
+<p>Markers used for inline markup are ordinary characters (e.g. “*”). So, when used in an ordinary way (i.e., not as markup), the marker-character must be <em>escaped</em> — so as to differentiate it from its use as a markup marker. Markers are <em>escaped</em> by preceding the marker-character with a backslash character (e.g., “\*”).</p>
+<p>For each of the following inline elements, the Markdown-language marker is given. Taken together, these markers demonstrate a complete character set that might need to be escaped in ordinary use.</p>
+<ul>
+<li>Emphasis (Italicize with surrounding “*” or “_”. Make bold with surrounding “**” or “__”. Strikethrough text with surrounding “~~”.)</li>
+<li>Subscript/superscript (Make sub with surrounding “~”. Make super with surrounding “^”.)</li>
+<li>Code/monospace text (Designate with one or more surrounding “`”.)</li>
+<li>Inserted text (Designate with surrounding “++”.)</li>
+<li>Highlighted/marked text (Designate with surrounding “==”.)</li>
+<li>Links/image placeholders (Designate either one with surrounding “[” &amp; “]” and with trailing “[ ]” or “( )”. Lead images with an additional “!”. Lead footnote links with an additional “^”. Note that the unlikely combination of these characters in ordinary use makes escaping them less necessary.)</li>
+</ul>
+<p>Note that LMLs are still evolving and are continually being modified to accommodate more document markup complexity. The only way to accomplish this is by conscripting more of the us-ascii character set as markers.</p>
+<p>However, this trend conflicts with the core function of LMLs to maintain visual clarity for an average reader or writer. So, at some point, a balance must be struck such that LML-document structures are reasonably multi-functional, yet the necessity of character escaping is also kept reasonably minimal.</p>
+</li>
+<li>
+<p><strong>Block elements</strong> : delineation with blank lines</p>
+<p>Insert blank lines such that at least one blank line precedes and one follows every structural, block element. (E.g., heading, paragraph, list, blockquote, codeblock, horizontal rule, etc.)</p>
+<p>Delineation in some other way — such as indenting the first line of each paragraph — could interfere with other protocols — such as indenting to signal multiple list-item paragraphs. So, anything other than single-blank-line delineation of block elements should be avoided.</p>
+</li>
+<li>
+<p><strong>Headings</strong> : conventional level assignments</p>
+<p>Given the general expectations of readers about a document’s hierarchical structure — and also to avoid unpredictable or disruptive combinations of heading levels within a document — make within a Source Doc one or more of the following heading-label-to-level assignments:</p>
+<ul>
+<li>Document <em>title</em>: assign to level 1 (h1 marker)</li>
+<li>Document <em>part</em>: assign to level 2 (h2 marker)</li>
+<li>Document <em>chapter</em>: assign to level 3 (h3 marker)</li>
+<li>Document <em>subchapter section</em>: assign to corresponding level 4-6 (h4-h6 markers)</li>
+</ul>
+</li>
+<li>
+<p><strong>List items</strong> : together as one, or separate as multiple, paragraphs</p>
+<p>If an entire list is to be counted as a single paragraph, do not separate list items with a blank line. However, if each list item is to be counted as a new paragraph, separate them with one blank line — and only one blank line, so as not to disrupt the list-block parent element.</p>
+</li>
+<li>
+<p><strong>Table</strong> : simple or complex</p>
+<p>Simple, basic tables can be created using lightweight markup. But complex tables pose various difficulties. In such cases, additional parsing is necessary. For example, a complex table could be created using formal HTML markup, then specially parsed — independently from the rest of the Source Doc — to generate the same table in a PDF document.</p>
+</li>
+<li>
+<p><strong>Document comment/style/script/LaTeX command</strong> : arrangement of add-on features</p>
+<p>If non-printed comments, human-processing instructions or other peripheral matter must be included within a Source Doc, enclose everything within a set of HTML comment tags — ensuring that no character sequence within the comment block inadvertently forms an “end comment tag”, and interrupts the source-code stream for the printed matter. ( <code>&lt;!-- ... --&gt;</code> )</p>
+<p>If HTML styles and/or scripts must be included within a Source Doc, maintain, as much as possible, the common coding practice of grouping all styles together at the head of a document and grouping all scripts together at the tail of a document. This practice has other purposes beyond just achieving well-formalness. Browser rendering of web documents might be disrupted if the sequential arrangement of these elements is too random.</p>
+<p>If LaTeX commands must be included within a Source Doc, hide each LaTeX command from the HTML parser by enclosing it in a hidden-styled, HTML div-block. (Refer to chapter 2.5 for a demonstration.)</p>
+</li>
+</ol>
+<hr />
+<h2><em>Markdown-it</em> and <em>Pandoc</em> — Overview and Practical Tips</h2>
+<p><em>Spoken language enables advancements in civilization. Written language enables advancements in scholastics. Correspondingly, markup language and supporting programming languages enable ongoing advancements in information and technological science.</em></p>
+<p>Markdown <em>is the current, leading markup language for this stage in human progress. The following discussion focuses on two, open-source tools that facilitate communications in</em> Markdown.</p>
+<p><a href="https://markdown-it.github.io/"><em>Markdown-it</em></a> ( <code>markdownit</code> ) is a javascript parser that can be used (by a website or web app, for example) to take a plain-text document written in the LML called <em>Markdown</em> — a writing standard — and convert it into the heavyweight, <em>HTML</em> markup language — the web standard.</p>
+<p><a href="http://pandoc.org/try/"><em>Pandoc</em></a> ( <code>pandoc</code> ) is a computer script that can be used (by an installable computer program or device app, for example) to take a plain-text document written in any of 22 light-/heavy-weight markup languages — including <em>Markdown</em> — and convert it into one of several other heavyweight markup languages (or back again) — including both <em>HTML</em> and a PDF proto-language called <em>LaTeX</em>.</p>
+<h3>Significant <em>Pandoc</em> features that <em>Markdown-it</em> lacks</h3>
+<p><em>Markdown-it</em> has the advantage of leaving behind a relatively small footprint. It focuses on one task and does it without much fuss. It is meant to output HTML documents only. Given this focus, naturally, it cannot offer dual-media outputs and, thus, cannot completely test for the well-formalness of a Source Doc.</p>
+<p><em>Pandoc</em>, on the other hand, does more — and is more cumbersome. It is not a quick-and-dirty tool — but it affords the advantage of giving many more options than <em>Markdown-it</em> gives, which may be used to thoroughly test the well-formalness of a Source Doc.</p>
+<p>For publishing reference, listed here are certain capabilities that are, both, found in <em>Pandoc</em> and not found in <em>Markdown-it</em>.</p>
+<ol>
+<li>
+<p>Generating an ordered list of a certain numeral type/style:</p>
+<p>a.  Alphabetic letters, capitalized ( “A.” )<br />
+b.  Alphabetic letters, uncapitalized ( “a.” )<br />
+c.  Roman numerals, capitalized ( “I.” )<br />
+d.  Roman numerals, uncapitalized ( “i.” )<br />
+e.  Arabic or other numerals with parentheses ( “(1)” ) (partial lack in <em>Pandoc</em> also)</p>
+</li>
+<li>
+<p>Setting of an ordered-list starting number ( <code>&lt;ol start=5&gt;...&lt;/ol&gt;</code> )</p>
+</li>
+<li>
+<p>Processing a <em>Pandoc</em> fixed-width table (a more sophisticated, lightweight-markup format than a Markdown-table format can offer)</p>
+</li>
+<li>
+<p>Creating a table caption ( <code>&lt;table&gt;...&lt;caption&gt;...&lt;/caption&gt;&lt;/table&gt;</code> )</p>
+</li>
+<li>
+<p>Processing of certain escaped/concealed characters:</p>
+<p>a.  Escaped-newline as break-tag ( <code>&lt;br /&gt;</code> )<br />
+b.  Escaped-space as no-break-space ( <code>&amp;nbsp;</code> )<br />
+c.  Other escaped characters outside a certain subset</p>
+</li>
+<li>
+<p>Parsing of div-block contents written in Markdown ( <code>&lt;div&gt;...&lt;/div&gt;</code> )</p>
+</li>
+<li>
+<p>Generating a header-block and a table-of-contents (TOC) nav-block<br />
+( <code>&lt;header&gt;...&lt;/header&gt;</code>, <code>&lt;nav id=&quot;TOC&quot;&gt;...&lt;/nav&gt;</code> )</p>
+</li>
+<li>
+<p>Generating h-block IDs for navigation anchors ( <code>&lt;h3 id=&quot;chapter1&quot;&gt;...&lt;/h3&gt;</code> )</p>
+</li>
+<li>
+<p>Generating PDF output / stripping extraneous LaTeX commands for HTML output</p>
+</li>
+</ol>
+<h3>Useful Source-Doc-processing command-line scripts with <em>Pandoc</em></h3>
+<h5 id="convert-markdown-into-html"><em>Convert Markdown into HTML</em></h5>
+<pre><code class="language-bash">pandoc -f markdown+old_dashes -s --toc --ascii \
+-c ../res-css/styles.css \
+-c ../res-css/styles-ebook.css \
+-o filname.html \
+filename.txt
+# -f: convert from given file type; -s: output a standalone doc
+# --toc: generate table of contents; --ascii: output only ascii chars
+# -c: link to given CSS stylesheet; -o: output to given filename
+
+pandoc -t html -f markdown+old_dashes -s --ascii \
+filename.txt | \
+perl \
+-pe 's/ &amp;#8212; ?|&amp;#8212; /&amp;thinsp;&amp;mdash;&amp;thinsp;/g;' \
+&gt; filename.html
+# -t: convert to given file type
+# demonstration of parsing first with pandoc, second with perl
+
+perl \
+-pe 's/^#+ \S.*$/$x = $&amp; =~ s%(?:—| ?— ?)% — %gr; $x/egm;' \
+&lt; filename.txt | \
+pandoc -t html -f markdown+old_dashes -s --toc --ascii | \
+perl \
+-pe 's/ &amp;#8212; ?|&amp;#8212; /—/g;' \
+&gt; filename-toc.html
+# demonstration of parsing with perl both before and after parsing with pandoc
+</code></pre>
+<h5 id="convert-markdown-into-pdf"><em>Convert Markdown into PDF</em></h5>
+<pre><code class="language-bash">perl \
+-pe 's/ -- /--/g;' \
+&lt; filename.txt | \
+pandoc -f markdown+old_dashes -s --toc \
+-V geometry:&quot;paperwidth=6.125in, paperheight=9.25in, top=0.875in, bottom=0.875in, width=4.375in&quot; \
+--latex-engine=xelatex \
+-o filename.pdf
+# -V: set template variable KEY: to &quot;VALUE&quot;
+
+perl \
+-pe 's/ -- /--/g;' \
+&lt; filename.txt | \
+pandoc -f markdown+old_dashes -s --toc \
+-V geometry:&quot;paperwidth=5in, paperheight=8in, top=0.05in, bottom=0.45in, width=4.375in&quot; \
+--latex-engine=xelatex \
+-o filename-bklt.pdf
+# demonstration of setting alternate output page dimensions
+</code></pre>
+<h3>Prevent auto-rendering a specific block as a <em>p</em>-block</h3>
+<p><em>Make a fully marked-up, HTML <strong>div</strong>-block.</em></p>
+<p><strong>“Before” text</strong> (this becomes a paragraph)</p>
+<pre><code>*__By__ Lewis Carroll . . .*
+&amp;emsp; *&amp;nbsp;. . . et Frank L. Warrin . . .*
+&amp;emsp; &amp;emsp; *&amp;nbsp;. . . und Robert Scotts*
+</code></pre>
+<p>Rendered result</p>
+<p><em><strong>By</strong> Lewis Carroll . . .</em><br />
+  <em> . . . et Frank L. Warrin . . .</em><br />
+    <em> . . . und Robert Scotts</em></p>
+<p>*</p>
+<p><strong>“After” text</strong> (this does not become a paragraph)</p>
+<pre><code class="language-html">&lt;div&gt;
+&lt;em&gt;&lt;strong&gt;By&lt;/strong&gt; Lewis Carroll&amp;nbsp;.&amp;nbsp;.&amp;nbsp;.&lt;/em&gt;&lt;br /&gt;
+&amp;emsp; &lt;em&gt;&amp;nbsp;.&amp;nbsp;.&amp;nbsp;. et Frank L. Warrin&amp;nbsp;.&amp;nbsp;.&amp;nbsp;.&lt;/em&gt;&lt;br /&gt;
+&amp;emsp; &amp;emsp; &lt;em&gt;&amp;nbsp;.&amp;nbsp;.&amp;nbsp;. und Robert Scotts&lt;/em&gt;
+&lt;/div&gt;
+</code></pre>
+<p>Rendered result</p>
+<div>
+<em><strong>By</strong> Lewis Carroll&nbsp;.&nbsp;.&nbsp;.</em><br  />
+&emsp; <em>&nbsp;.&nbsp;.&nbsp;. et Frank L. Warrin&nbsp;.&nbsp;.&nbsp;.</em><br  />
+&emsp; &emsp; <em>&nbsp;.&nbsp;.&nbsp;. und Robert Scotts</em>
+</div>
+<h3>Count a one-paragraph item of a lone-item list as a paragraph</h3>
+<p><em>Trail the list item with a blank line and another line with a 4-space-indented, empty comment block.</em></p>
+<pre><code>#### Important Quotations Explained
+
+1. “As a rule,” said Holmes, “the more bizarre a thing is the less mysterious it proves to be. It is your commonplace, featureless crimes which are really puzzling, just as a commonplace face is the most difficult to identify.”
+
+    &lt;!-- --&gt;
+</code></pre>
+<h3>Hide a LaTeX command in a Source Doc</h3>
+<p><em>Wrap the command in hidden, HTML <strong>div</strong>-block tags.</em></p>
+<pre><code class="language-html">&lt;div style=&quot;display: none;&quot;&gt;\newpage &lt;/div&gt;
+</code></pre>
+<!-- texthl --
+{Gold}
+-->
+<script type='text/javascript'>
+window.annos = { configs: {
+ptchbgn: null,
+tocfmt: "#h2.#h3"
+} };
+</script>
+<script src="https://jahoward11.github.io/mulight/res-js/highlight.pack.js" type='text/javascript'></script>
+<script src="https://jahoward11.github.io/mulight/res-js/ebook-annos-fns.js" type='text/javascript'></script>
+</body>
+</html>
