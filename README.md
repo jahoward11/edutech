@@ -21,6 +21,6 @@ __Project purpose:__ Make the nearest theoretical possibilities of technology ob
 
 __Top, working branches__
 
-- [calcjs](./calcjs/README.md) : JavaScript calculus
-- [csent](./csent/README.md) : Community service enterpris-itizing
-- [epub](./epub/README.md) : Electronic publishing
+- [calcjs](./calcjs/README.md) : JavaScript Calculator
+- [csent](./csent/README.md) : Community Service Enterpris-itizing
+- [epub](./epub/README.md) : Electronic Publishing
