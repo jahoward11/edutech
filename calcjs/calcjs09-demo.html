@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>JavaScript Calculator</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes" />
+<style type="text/css">
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+:root {
+  box-sizing: border-box;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  font: normal medium Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+.is-hidden {
+  display: none;
+}
+#cmain {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 0;
+}
+#cmain strong, #cmain h4 {
+  color: unset;
+}
+#cmain pre {
+  font-size: medium;
+  margin: 0;
+  padding: 2px;
+  white-space: pre;
+  word-wrap: normal;
+  overflow-wrap: normal;
+  overflow-x: hidden;
+}
+#cmain>#preresp {
+  color: Orange;
+  padding: 0;
+}
+#cmain>#cheadg {
+  color: Grey;
+  margin: 0 0 4px;
+}
+#cmain>#btncnew {
+  color: CornFlowerBlue;
+  background: #f9f9f9;
+  line-height: 1;
+  margin: -20px 4px 0 0;
+  width: 20px;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: underline;
+  float: right;
+}
+#cmain>#cgrid {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  grid-template-areas:
+    "quad1A quad1B"
+    "quad2A quad2B";
+  position: relative;
+  width: 100%;
+//outline: Yellow solid 1px;
+}
+#cgrid .dvar {
+  font-weight: bold;
+}
+#cgrid .dnote {
+  color: LightSteelBlue;
+}
+#cgrid>#quad1A, #cgrid>#quad1B {
+  min-height: 56px;
+}
+#cgrid>#quad2A, #cgrid>#quad2B {
+  min-height: 472px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+#cgrid>#quad1A, #cgrid>#quad2A {
+  position: relative;
+//width: 168px;
+  text-align: right;
+//float: left;
+}
+#cgrid>#quad1B, #cgrid>#quad2B {
+//max-width: 552px;
+}
+#cgrid>#quad1A {
+  grid-area: quad1A;
+  color: Grey;
+  background: LightGrey;
+}
+#cgrid>#quad1B {
+  grid-area: quad1B;
+  font-weight: bold;
+  color: LightSlateGrey;
+  background: LightSteelBlue;
+}
+#cgrid>#quad2A {
+  grid-area: quad2A;
+  color: WhiteSmoke;
+  background: DarkGrey;
+}
+#cgrid>#quad2B {
+  grid-area: quad2B;
+  color: Grey;
+  background: #f9f9f9;
+}
+#cgrid #dfinal, #cgrid #dinitl {
+  position: absolute;
+  left: 2px;
+  font: bold x-small Helvetica, Arial, sans-serif;
+  text-align: left;
+  opacity: 0.5;
+  user-select: none;
+}
+#cgrid #dfinal {
+  bottom: 0;
+  color: DarkGrey;
+}
+#cgrid #dinitl {
+  top: 0;
+  color: Grey;
+}
+#cgrid>#plist {
+  position: absolute;
+  top: 0;
+  background: Black;
+  color: White;
+  font-size: small;
+  width: 168px;
+  height: 100%;
+  margin: 0;
+  padding: 0.5em 0 0.5em 0.5em;
+  list-style-type: none;
+  white-space: nowrap;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  opacity: 0.5;
+}
+@media print {
+  body, #cmain { margin: 0 auto; padding: 0; }
+  #quad1A { box-shadow: inset 0 -1px LightGrey; }
+  #quad1B { box-shadow: inset 0 -1px LightSteelBlue; }
+  #btncnew, #dfinal, #dinitl { display: none; }
+}
+@media print and (orientation: portrait) and (max-width: 554px),
+print and (orientation: portrait) and (width: 768px),
+print and (orientation: landscape) and (width: 1024px) { /* iPhone/iPad, chrome/safari */
+  :root { //-webkit-text-size-adjust: 93%; //text-size-adjust: 93%; }
+  body { min-width: 677px; max-width: 677px; }
+  p, li, td { line-height: 1.1; }
+  pre, code, #cmain pre, #cmain code { font-size: 12px; line-height: 1.1; }
+}
+</style>
+</head>
+<body>
+<main id="cmain">
+<xmp id="dinput" class="is-hidden">
+
+p = 5
+q = 32
+r = Math.random()
+
+x = x0 = 0.5
+y = y0 = 3
+z = z0 = -250
+
+
+// __Demo and Use Description__
+
+ // Use this calculator to develop instructional algorithms
+// (like, a mathematical solution to a real-world problem) --
+// and to display/share such in a portable, HTML file (web app).
+
+// *Why?*
+ // - Interactive: rerun a trial -- giving new initial values
+ // - Reusable: copy and paste a custom expression or whole block
+ // - Printable: make clean print-outs on standard, letter-size paper
+ // - Lightweight: leverage minimal, shared code across major browsers
+ // - Conventional: reinforce standards in notation/methods of science
+
+// *How?*
+ // - Enter data (like, mathematical expressions) into the large,
+   // light-colored quadrant only -- the *ENTRY* field.
+ // - After composing a complete expression set, generate and download
+   // a standalone, interactive document (web app) -- to be kept and/or
+   // shared -- by tapping the *down-bar* icon at the top right corner.
+ // - Alternatively, if the calculator is generated within *__E__collabs*,
+   // manipulate data within the *SOURCE2* field of the __*File Edit UI*__
+   // screen. Note that when saving any changes made to calc data,
+   // using (or, just focusing) the *SOURCE2* field is necessary.
+ // - When the *ENTRY* field is focused, JavaScript math functions
+   // appear and are listed in the left column -- for conveniently
+   // copy-pasting into the *ENTRY* field. (See use descriptions below.)
+ // - When the *ENTRY* field is de-focused, line-item results appear
+   // automatically in the *RESULTS* column -- to the left of each
+   // line that contains a valid expression.
+ // - Create a comment, like this one, by prepending the text
+   // with a double slash (e.g., //comment).
+&Tab;// Indent, like this, with "*&amp;Tab;*"
+&Tab;  // ... and/or like this, with ordinary spaces.
+ // - Make commented text __bold__ by wrapping it
+   // in double underscores (e.g., _&zwj;_bolded text_&zwj;_).
+ // - Make commented text *italicized* by wrapping it
+   // in single asterisks (e.g., &lowast;italicized text&lowast;).
+ // - Make a commented variable _pop_ by wrapping it alone
+   // in single underscores (e.g., _&zwj;pop&zwj;_).
+
+$RndmExpn = Math.ceil(r * 10)
+
+ // - Create a __$-variable__ by prepending an ordinary variable
+   // with a dollar symbol (e.g., "$&zwj;x1", "$&zwj;RndmExpn").
+   // Use: Every __$-variable__ will automatically be bolded --
+   // and will also appear in the *FINAL VALUES* row, at the top.
+
+$x1 = Math.pow(x0, $RndmExpn)
+$y1 = Math.pow(y0, $RndmExpn)
+$z1 = Math.pow(z0, $RndmExpn)
+
+
+
+// __JavaScript Math Object__
+
+// __Property	Description__
+ Math.E		// Returns Euler's number (approx. 2.718)
+ Math.LN2	// Returns the natural logarithm of 2 (approx. 0.693)
+ Math.LN10	// Returns the natural logarithm of 10 (approx. 2.302)
+ Math.LOG2E	// Returns the base-2 logarithm of E (approx. 1.442)
+ Math.LOG10E	// Returns the base-10 logarithm of E (approx. 0.434)
+ Math.PI	// Returns PI (approx. 3.14)
+ Math.SQRT1_2	// Returns the square root of 1/2 (approx. 0.707)
+ Math.SQRT2	// Returns the square root of 2 (approx. 1.414)
+
+// __Method		Description__
+ Math.sin(x)	// Returns the sine of _x_ (_x_ is in radians)
+ Math.cos(x)	// Returns the cosine of _x_ (_x_ is in radians)
+ Math.tan(x)	// Returns the tangent of an angle
+
+ Math.asin(x)	// Returns the arc-sine of _x_, in radians
+ Math.acos(x)	// Returns the arc-cosine of _x_, in radians
+ Math.atan(x)	// Returns the arc-tangent of _x_ as a numeric value between -PI/2 and PI/2 radians
+ Math.atan2(y,x)// Returns the arc-tangent of the quotient of its arguments
+
+ Math.acosh(3)	// Returns the hyperbolic arc-cosine of a number
+ Math.hypot(3,4)// Returns the square root of the sum of squares of its arguments
+ Math.imul(Math.pow(2,32) - 1, Math.pow(2,32) - 2)
+		// Returns the result of the C-like 32-bit multiplication of the two arguments
+
+ Math.abs(z)	// Returns the absolute value of _z_
+ Math.sqrt(x)	// Returns the square root of _x_
+ Math.pow(x,y)	// Returns the value of _x_ to the power of _y_
+ Math.exp(1)	// Returns the value of E to the power of _arg_
+ Math.log(2)	// Returns the natural logarithm (base E) of _arg_
+
+ Math.round(x)	// Rounds _x_ to the nearest integer
+ Math.ceil(x)	// Returns _x_, rounded upwards to the nearest integer
+ Math.floor(x)	// Returns _x_, rounded downwards to the nearest integer
+
+ Math.min(x,y,z)// Returns the number with the lowest value *(x, y, z, ... n)*
+ Math.max(x,y,z)// Returns the number with the highest value *(x, y, z, ... n)*
+
+ Math.random()	// Returns a random number between 0 and 1
+
+
+
+// __JavaScript Number Object__
+
+// __Property	Description__
+ z.constructor	// Returns the function that created JavaScript's Number prototype
+
+ Number.EPSILON
+ Number.MAX_VALUE
+		// Returns the largest number possible in JavaScript
+ Number.MIN_VALUE
+		// Returns the smallest number possible in JavaScript
+ Number.NEGATIVE_INFINITY
+		// Represents negative infinity (returned on overflow)
+ Number.NaN	// Represents a "Not-a-Number" value
+ Number.POSITIVE_INFINITY
+		// Represents infinity (returned on overflow)
+ Number.prototype
+		// Allows you to add properties and methods to an object
+
+// __Method		Description__
+ Number.isFinite(q)
+		// Checks whether a value is a finite number
+ Number.isInteger(q)
+		// Checks whether a value is an integer
+ Number.isInteger(Infinity)
+		// false
+ Number.isNaN(q)// Checks whether a value is Number.NaN
+ Number.isNaN("NaN")
+		// false
+ Number.isSafeInteger(q)
+		// Checks whether a value is a safe integer
+
+ z.toExponential(p)
+		// Converts a number into an exponential notation
+ z.toFixed(p)	// Formats a number with _p_ numbers of digits after the decimal point
+ z.toPrecision(p)
+		// Formats a number to _p_ length
+ z.toString(2)	// Converts a number to a string; _z_.toString(radix), radix: 2, 8, 16
+ z.valueOf()	// Returns the primitive value of a number
+
+</xmp>
+<h4 id="cheadg">JavaScript Calculator</h4>
+<pre id="preresp"></pre>
+<a id="btncnew" title="Generate a new jscalc doc.">&#x25be;</a>
+<div id="cgrid">
+  <pre id="quad1A"></pre><pre id="quad1B"></pre>
+  <pre id="quad2A"></pre><pre id="quad2B" contenteditable=true></pre>
+  <ul id="plist" class="is-hidden"></ul>
+</div>
+</main>
+<script type="text/javascript">
+(function () {
+let $_, cfoc, q2Bcopy, obj, rnge, reslts, rslt, seln, xprsns,
+  dinput = document.querySelector('#cmain>#dinput'),
+  btncnew = document.querySelector('#cmain>#btncnew'),
+  preresp = document.querySelector('#cmain>#preresp'),
+  quad1A = document.querySelector('#cgrid>#quad1A'),
+  quad1B = document.querySelector('#cgrid>#quad1B'),
+  quad2A = document.querySelector('#cgrid>#quad2A'),
+  quad2B = document.querySelector('#cgrid>#quad2B'),
+  plist = document.querySelector('#cgrid>#plist'),
+  dinp2 = document.querySelector('#ecoesp0 #jdvdft>#srcpanes>.textarea:nth-of-type(2)')
+    || { value: dinput.innerHTML.replace(/\n+$|^\n+/g, "") },
+  respShow = resp => preresp.innerHTML
+    += ( !resp || typeof resp !== 'object' || resp instanceof Error && resp.constructor
+      ? resp : JSON.stringify(resp, null, 2) ) + "\n\n",
+  calcNew = () => {
+    let anew = document.createElement('a'),
+      chtml = '<!DOCTYPE html>\n<html lang="en">\n'
+      + (document.querySelector('#ecorender') || document.documentElement).innerHTML
+        .replace(/(<xmp id="dinput">)[^]*?(?=<\/xmp>)/, (m, c1) => c1 + "\n" + dinp2.value + "\n")
+        .replace(/(<pre id="preresp">)[^]*?(?=<\/pre>)/, "$1")
+        .replace( /(<div id="cgrid">\n)[^]+?(?=\n<\/div>)/,
+          "$1" + `  <pre id="quad1A"></pre><pre id="quad1B"></pre>
+  <pre id="quad2A"></pre><pre id="quad2B" contenteditable=true></pre>
+  <ul id="plist" class="is-hidden"></ul>` ) + "\n</html>\n";
+    anew.setAttribute('download', "calcjs-draft02.html");
+    anew.setAttribute('href', "data:text/html;charset=utf-8," + encodeURIComponent(chtml));
+    anew.click();
+  },
+  txtPste = evt => {
+    pste = (evt.clipboardData || window.clipboardData).getData('text');
+    seln = window.getSelection();
+    if (!seln.rangeCount) return false;
+    seln.deleteFromDocument();
+    seln.getRangeAt(0).insertNode(document.createTextNode(pste));
+    evt.preventDefault();
+  },
+  reEval = () => {
+    $_ = {};
+    !preresp.innerHTML || (preresp.innerHTML = null);
+    xprsns = dinp2.value.replace(/&Tab;/g, "\t").replace(/\$(?=[^\W_])/g, "$$_.").split("\n");
+    reslts = xprsns.map(xpr => {
+      try {
+        rslt = eval(xpr);
+        return rslt == null ? ""
+        : typeof rslt === 'string' ? rslt
+        : rslt.toString().replace(/\s+/g, " ");
+      } catch (err) { respShow(err); return err; }
+    });
+    quad1A.innerHTML = Object.values($_).join("\n").replace(/\n$/, "\n&nbsp;")
+      + '<span id="dfinal">$-variables<br />FINAL<br />VALUES</span>';
+    quad1B.innerHTML = Object.keys($_).join("\n");
+    quad2A.innerHTML = reslts.join('\n').replace(/\n$/, "\n&nbsp;")
+      + '<span id="dinitl">Line-<br />expression<br />RESULTS</span>';
+    quad2B.innerHTML = xprsns.map( xpr => xpr.replace( /\/\/ *(.*?) *$/, (m, c1) =>
+      '<span class="dnote">' + c1
+        .replace(/(\W|^)_([0-9a-z]+)_(?=$|\W)/g, "$1<strong><em>$2</em></strong>")
+        .replace(/(\W|__|^)\*(?=\S)(.*\S)\*(?=$|\W|\1)/g, "$1<em>$2</em>")
+        .replace(/\b__(.+?)__(?!_)/g, "<strong>$1</strong>")
+      + "</span> " )).join("\n")
+    .replace(/\$_\.(\w+)/g, '<span class="dvar">$1</span>');
+    q2Bcopy = quad2B.textContent;
+  },
+  inpRegen = evt => {
+    if ( !(obj = (evt || {}).target) || ( cfoc = [null, "parentElement", "parentElement", "parentElement"]
+      .some(k => /quad2B|plist/.test((obj = obj[k] || obj).id || "")) )
+    || quad2B.textContent === q2Bcopy && !/<(?:br|div)>/.test(quad2B.innerHTML) ) {
+      if (evt && /plist/.test((evt.target.parentElement || {}).id || "")) {
+      //if (evt && /plist/.test(evt.path[1].id)) {
+        seln = window.getSelection();
+        seln.removeAllRanges();
+        rnge = document.createRange();
+        rnge.selectNodeContents(evt.target);
+        seln.addRange(rnge);
+      }
+      !cfoc || !plist.className
+      || (quad2B.innerHTML = dinp2.value.replace(/&(?=\w+;)/g, "&amp;"));
+      //quad2B.textContent === q2Bcopy || (quad2A.innerHTML = null);
+      plist.className = cfoc ? "" : "is-hidden";
+    } else {
+      plist.className = "is-hidden";
+      dinp2.value = quad2B.innerHTML
+      .replace(/<(\w+)>\s*<\/\1>/g, "")
+      .replace(/(?:(?:<br>|)<\/div>|<br>|)<div><br><\/div>|(?:(?:<br>|)<\/div>|<br>|\n|)<div>|<br>/g, "\n")
+      .replace(/<strong><em>(\w+)<\/em><\/strong>/g, "_$1_")
+      .replace(/<\/?em>/g, "*")
+      .replace(/<\/?strong>/g, "__")
+      .replace(/<span class="dvar">(\w+)<\/span>/g, "$$$1")
+      .replace(/<span class="dnote">(.+)<\/span> */g, "// $1")
+      .replace(/<\/?\b(?:[ \w,:;"#=-]+)>|\n+$|^\n+/g, "")
+      .replace(/&amp;(?=\w+;)/g, "&")
+      .replace(/^.*?(?=\/\/|$)/gm, m => m.replace(/^\\t/g, "\t"));
+      reEval();
+    }
+  };
+plist.innerHTML = "\n    " + Object.getOwnPropertyNames(Math)
+  .map((e, i) => `<li>Math.${e}${/^[A-Z]/.test(e) ? "" : "()"}</li>`).join("\n    ")
+  + "\n    " + Object.getOwnPropertyNames(Number)
+  .map((e, i) => `<li>Number.${e}${!/^is|^parse/.test(e) ? "" : "()"}</li>`).join("\n    ")
+  + "\n    " + ["", ".toLocaleString()", ".toUTCString()", ".toISOString()", ".getTime()"]
+  .map(e => `<li>new Date()${e}</li>`).join("\n    ") + "\n  ";
+//document.execCommand("defaultParagraphSeparator", false, null);
+(document.querySelector('#ecorender') || document.body)
+.addEventListener('click', inpRegen);
+btncnew.addEventListener('click', calcNew);
+quad2B.addEventListener('paste', txtPste);
+reEval();
+})();
+</script>
+</body>
+</html>
