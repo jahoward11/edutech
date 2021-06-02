@@ -5,6 +5,6 @@
 
 __Project purpose:__ Learn math and JavaScript code together.
 
-- [JavaScript Calculator](https://jahoward11.github.io/a00/-app-calcjs/calcjs0.10.html)
+- [JavaScript Calculator](https://jahoward11.github.io/a00/-app-cjs/calcjs0.html)
 
 - [CalcJS, including demo expressions and functions](https://jahoward11.github.io/edutech/calcjs/calcjs09-demo.html)
