@@ -24,3 +24,4 @@ __Top, working branches__
 - [calcjs](./calcjs/README.md) : JavaScript Calculator
 - [csent](./csent/README.md) : Community Service Enterpris-itizing
 - [epub](./epub/README.md) : Electronic Publishing
+- [gtools](https://docs.google.com/document/d/11fULAXoeRo5NuOH1r4BukqFq0BIfACc2EIoNKeLUXjg/edit) : Google Goldmine - Notes
